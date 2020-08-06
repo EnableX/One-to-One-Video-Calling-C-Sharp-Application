@@ -33,7 +33,7 @@ Visit Demo Zone (https://try.enablex.io/) to request a Guided Demo or Demo Acces
 * Register with EnableX [https://portal.enablex.io/trial-sign-up/] 
 * Create your Application
 * Get your App ID and App Key delivered to your Email
-* Clone or download this Repository [https://github.com/EnableX/web-1to1-conf-csharp.git] & follow the steps further
+* Clone or download this Repository [https://github.com/EnableX/One-to-One-Video-Calling-C-Sharp-Application] & follow the steps further
 
 #### 3.1.2 SSL Certificates
 
