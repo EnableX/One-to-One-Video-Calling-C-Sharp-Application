@@ -1,0 +1,3 @@
+[submodule "sample-csharp/wwwroot"]
+	path = sample-csharp/wwwroot
+	url = https://github.com/EnableX/One-to-One-Video-Sample-Web-Application.git

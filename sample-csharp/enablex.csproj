@@ -10,7 +10,7 @@
     <StartAction>Project</StartAction>
     <ExternalConsole>true</ExternalConsole>
     <LaunchUrl>/</LaunchUrl>
-    <ApplicationURL>http://localhost:52226</ApplicationURL>
+    <ApplicationURL>http://localhost:61307</ApplicationURL>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
@@ -18,10 +18,6 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
-    <Folder Include="wwwroot\" />
-    <Folder Include="wwwroot\assets\" />
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\img\" />
-    <Folder Include="wwwroot\js\" />
+	<Folder Include="wwwroot\" />
   </ItemGroup>
 </Project>

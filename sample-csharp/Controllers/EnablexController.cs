@@ -33,7 +33,7 @@ namespace EnableX.Controllers
         /// </summary>
         /// <param name="roomId"></param>
         /// <returns>Result of the room</returns>
-        [HttpGet("/api/get-room")]
+        [HttpGet("/api/get-room/{roomId}")]
         public async Task<string> GetRoom(string roomId)
         {
             // build auth token for using EnableX video API
@@ -62,16 +62,13 @@ namespace EnableX.Controllers
             roomBodySip.enabled = false;
 
             RoomBodySettings roomBodySettings = new RoomBodySettings();
-            roomBodySettings.description = "";
-            roomBodySettings.quality = "SD";
-            roomBodySettings.mode = "group";
+            roomBodySettings.scheduled = false;
+            roomBodySettings.adhoc = true;
+            roomBodySettings.moderators = "1";
             roomBodySettings.participants = "1";
             roomBodySettings.duration = "30";
-            roomBodySettings.scheduled = false;
+            roomBodySettings.quality = "SD";
             roomBodySettings.auto_recording = false;
-            roomBodySettings.active_talker = true;
-            roomBodySettings.wait_moderator = false;
-            roomBodySettings.adhoc = true;
 
             var rand = new Random();
             int randNum = rand.Next();
@@ -89,6 +86,53 @@ namespace EnableX.Controllers
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
             
+            // EnableX create room api - /api/rooms/
+            string apiEndpoint = $"{enablexConfig.API_URL}rooms/";
+
+            var json = JsonConvert.SerializeObject(roomBody);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(apiEndpoint, data);
+
+            return response.Content.ReadAsStringAsync().Result;
+        }
+
+        /// <summary>
+        /// Method to create EnableX room
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("/api/room/multi")]
+        public async Task<string> CreateRoomMulti()
+        {
+            #region
+            // Build JSON Raw Body Payload for creating EnableX room
+            RoomBodySip roomBodySip = new RoomBodySip();
+            roomBodySip.enabled = false;
+
+            RoomBodySettings roomBodySettings = new RoomBodySettings();
+            roomBodySettings.scheduled = false;
+            roomBodySettings.adhoc = true;
+            roomBodySettings.moderators = "1";
+            roomBodySettings.participants = "5";
+            roomBodySettings.duration = "30";
+            roomBodySettings.quality = "SD";
+            roomBodySettings.auto_recording = false;
+
+            var rand = new Random();
+            int randNum = rand.Next();
+
+            RoomBody roomBody = new RoomBody();
+            roomBody.name = $"Sample Room {randNum}";
+            roomBody.owner_ref = $"{randNum}";
+            roomBody.settings = roomBodySettings;
+            roomBody.sip = roomBodySip;
+            #endregion
+
+            // build auth token for using EnableX video API
+            var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{enablexConfig.APP_ID}:{enablexConfig.APP_KEY}"));
+
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
+
             // EnableX create room api - /api/rooms/
             string apiEndpoint = $"{enablexConfig.API_URL}rooms/";
 
